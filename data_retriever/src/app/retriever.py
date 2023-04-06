@@ -1,4 +1,4 @@
-# import requests
+import requests
 
 
 class Retriever:
@@ -11,4 +11,6 @@ class Retriever:
     def _get(self):
         response = requests.get(self.BASE_URL, params=self.QUERY_PARAMS)
         response.raise_for_status()
-        return response.json()
+        return response
+# TODO: change return to yield and use requests.Session() for pagination
+#   response['_links']['next'] has the prepared full url for the next get request
