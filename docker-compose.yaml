@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   core:
-    build: ./core
+    build:
+      context: ./core
+      dockerfile: ./Dockerfile
     env_file:
       - .env
     ports:
@@ -13,9 +15,13 @@ services:
         ipv4_address: 10.5.0.2
 
   data_retriever:
-    build: ./data_retriever
+    build:
+      context: ./data_retriever
+      dockerfile: ./Dockerfile
     env_file:
       - .env
+    volumes:
+      - ./data_retriever/src:/src
     platform: linux/arm64v8
     networks:
       network:
