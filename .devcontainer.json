@@ -1,0 +1,22 @@
+{
+  // Default path to open when attaching to a new container.
+  "workspaceFolder": "/src",
+  // Add the IDs of extensions you want installed when the container is created.
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.flake8",
+        "ms-python.flake8"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  // An array port numbers to forward
+  "forwardPorts": [
+    8000
+  ],
+  // Container user VS Code should use when connecting
+  "remoteUser": "vscode"
+}
