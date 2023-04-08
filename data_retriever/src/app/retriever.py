@@ -1,9 +1,11 @@
+from urllib.parse import parse_qs
 import requests
+import urllib3
 
 
 class DataRetriever:
 
-    def __init__(self, base_url: str, query_params: str | None = None, pagination_key: str | None = None) -> None:
+    def __init__(self, base_url: str, query_params: dict[str, str] = {}, pagination_key: str | None = None) -> None:
         self.BASE_URL = base_url
         self.QUERY_PARAMS = query_params
         self.pagination_key = pagination_key
@@ -16,11 +18,16 @@ class DataRetriever:
         if not self.pagination_key:
             raise NoPaginationSetError
 
-        next_page_link = response.json().get("_links", {}).get(self.pagination_key)
-        while next_page_link:
-            response = requests.get(next_page_link)
+        next_page_link = response.json().get("result", {"_links": {}}).get("_links").get(self.pagination_key)
+        records = response.json().get("result", {}).get("records")
+        while records:
+            offset = parse_qs(next_page_link)["offset"]
+            next_params = self.QUERY_PARAMS.copy()
+            next_params["offset"] = offset[0]
+            response = requests.get(self.BASE_URL, params=next_params)
             response.raise_for_status()
-            next_page_link = response.json().get("_links", {}).get(self.pagination_key)
+            next_page_link = response.json().get("result", {"_links": {}}).get("_links").get(self.pagination_key)
+            records = response.json().get("result", {}).get("records")
             yield response
 
 

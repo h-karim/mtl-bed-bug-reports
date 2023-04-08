@@ -8,8 +8,8 @@ class TestRetriever:
     def test_get_paginated_data_with_request_information(self):
         with requests_mock.Mocker() as m:
             test_url = "http://andnothingelsematters"
-            test_url_next = "http://andnothingelsematters2"
-            response_json_next = {"_links": {"next": test_url_next}}
+            test_url_next = "andnothingelsematters2"
+            response_json_next = {"result": {"_links": {"next": test_url_next}}}
             response_json_final = {}
             responses = [response_json_next, response_json_final]
             m.get(test_url, json=response_json_next)
@@ -22,7 +22,7 @@ class TestRetriever:
         with requests_mock.Mocker() as m:
             test_url = "http://andnothingelsematters"
             test_url_next = "http://andnothingelsematters2"
-            response_json_next = {"_links": {"next": test_url_next}}
+            response_json_next = {"result": {"_links": {"next": test_url_next}}}
             m.get(test_url, json=response_json_next)
 
             retriever = DataRetriever(test_url)
