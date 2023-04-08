@@ -1,7 +1,7 @@
 import requests
 
 
-class Retriever:
+class DataRetriever:
 
     def __init__(self, base_url: str, query_params: str | None = None, pagination_key: str | None = None) -> None:
         self.BASE_URL = base_url
