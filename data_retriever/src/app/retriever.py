@@ -3,14 +3,27 @@ import requests
 
 class Retriever:
 
-    def __init__(self, base_url: str, query_params: str, pagination_key: str) -> None:
+    def __init__(self, base_url: str, query_params: str | None = None, pagination_key: str | None = None) -> None:
         self.BASE_URL = base_url
         self.QUERY_PARAMS = query_params
         self.pagination_key = pagination_key
 
-    def _get(self):
+    def request_information(self):
         response = requests.get(self.BASE_URL, params=self.QUERY_PARAMS)
         response.raise_for_status()
+        yield response
+
+        if not self.pagination_key:
+            raise NoPaginationSetError
+
+        next_page_link = response.json().get("_links", {}).get(self.pagination_key)
+        while next_page_link:
+            response = requests.get(next_page_link)
+            response.raise_for_status()
+            next_page_link = response.json().get("_links", {}).get(self.pagination_key)
+            yield response
+
+
 class NoPaginationSetError(Exception):
 
     def __init__(self, *args):
