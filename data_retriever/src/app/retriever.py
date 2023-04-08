@@ -38,7 +38,3 @@ class NoPaginationSetError(Exception):
 
     def __str__(self):
         return "Pagination requested without pagination key being set"
-
-
-# TODO: change return to yield and use requests.Session() for pagination
-#   response['_links']['next'] has the prepared full url for the next get request
