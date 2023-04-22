@@ -9,4 +9,6 @@ if __name__ == "__main__":
         a = data
         pprint(data.json()["result"]["_links"]["next"])
 
-    print(a.json()["result"]["records"])
+        pprint(a.json())
+        pprint(a.json()["result"]["records"][0])
+        break
