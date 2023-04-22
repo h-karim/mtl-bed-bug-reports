@@ -9,7 +9,6 @@ class DataRetriever:
         self.BASE_URL = base_url
         self.QUERY_PARAMS = query_params
         self.pagination_key = pagination_key
-        self._next_params = None
 
     def _get_request(self, query_params):
         response = requests.get(self.BASE_URL, params=query_params)
