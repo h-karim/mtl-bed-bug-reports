@@ -19,7 +19,7 @@ class TestRetriever:
             m.get(test_url_next, json=response_json_final)
             retriever = DataRetriever(test_url, pagination_key="next")
 
-            results = retriever.request_information()
+            results = retriever.retrieve_information()
             final_page_num = 0
 
             for page_num, response in enumerate(results):
@@ -39,5 +39,5 @@ class TestRetriever:
             retriever = DataRetriever(test_url)
 
             with pytest.raises(NoPaginationSetError):
-                for _ in retriever.request_information():
+                for _ in retriever.retrieve_information():
                     continue
