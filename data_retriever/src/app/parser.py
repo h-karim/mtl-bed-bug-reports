@@ -2,7 +2,7 @@ class Parser:
     pass
 
 
-class Entry:
+class Record:
     """point: (X,Y)
     date: (yyyy/mm/dd) use date_declaration
     """
