@@ -18,15 +18,15 @@ if __name__ == "__main__":
         records_all_pages_df = pd.DataFrame(records_all_pages)
         records_all_pages_df.set_index('_id', inplace=True)
         records_all_pages_df.rename_axis('id', inplace=True)
-        print('All bedbugs records MTL df:', '\n', records_all_pages_df, '\n')
+        print('\n', 'All bedbugs records MTL df:', '\n', records_all_pages_df, '\n')
         print('Total number of records pulled:', len(records_all_pages_df), '\n')
         print('Variables in each record ...', '\n', records_all_pages_df.columns, '\n')
         #Save this to a csv to avoid having to repull the data.
-        print("Saving all MTL bedbugs records to 'results/records_all_pages.csv'")
+        print("Saving all MTL bedbugs records to 'results/records_all_pages.csv'", '\n')
         records_all_pages_df.to_csv('results/records_all_pages.csv')
     else:
         print("Loading all MTL bedbugs records from 'results/records_all_pages.csv'", '\n')
-        records_all_pages_df = pd.read_csv('results/records_all_pages.csv')
+        records_all_pages_df = pd.read_csv('results/records_all_pages.csv', '\n')
 
     # Initialize the interactive folium map centered around Montreal
     m = folium.Map(location=[45.5017, -73.5673], zoom_start=12)
@@ -42,5 +42,5 @@ if __name__ == "__main__":
             fill_color="red" # The fill color of the marker
         ).add_to(marker_cluster)
     # Save the map to an html
-    print("Saving interactive MTL bedbugs cluster map to 'results/bed_bugs_mtl_clustermap'")
+    print("Saving interactive MTL bedbugs cluster map to 'results/bed_bugs_mtl_clustermap.html'")
     m.save('results/bed_bugs_mtl_clustermap.html')
